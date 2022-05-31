@@ -1,0 +1,364 @@
+﻿@model Master_detail.Models.EMP
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <div class="master">
+            @*@Html.Partial("Dept")*@
+
+            <table class="table table-responsive">
+
+                <tr>
+                    <td>Deptno</td>
+                    <td>Dname</td>
+                    <td>Location</td>
+                </tr>
+                <tr>
+
+                    <td class="col-md-1">
+                        @*<input type="" name="Deptid" id="dept" class="dept form-control" placeholder="Deptno" />*@
+                        @Html.TextBoxFor(m => m.Deptid, new { id = "dept", @class = "dept form-control", @Placeholder = "Deptno",type="number", @maxlength = 2 })
+                        <span class="error">*Deptno required</span>
+                    </td>
+
+
+                    <td class="col-md-2">
+                        @Html.TextBoxFor(m => m.Dname, new { id = "dname", @class = "dname form-control", @Placeholder = "Dname", @maxlength = 100 })
+                        <span class="error">*Name required</span>
+                    </td>
+
+
+                    <td class="col-md-2">
+                        @Html.TextBoxFor(m => m.Location, new { id = "loc", @class = "loc form-control", @Placeholder = "Location", @maxlength = 50 })
+                        <span class="error">*Location required</span>
+                    </td>
+
+                </tr>
+
+            </table>
+        </div>
+
+        <br />
+
+        <div class="details">
+            <table class="table table-responsive">
+                <tr>
+                    <td>Empno</td>
+                    <td>Ename</td>
+                    <td>Job</td>
+                    <td>MGR</td>
+                    <td>Hiredate</td>
+                    <td>Sal</td>
+                    <td>Comm</td>
+                    <td>Deptno</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="mycontainer" id="mainrow">
+                    <td class="col-md-1">
+
+                        @Html.TextBoxFor(m => m.EMPNO, new
+                   {
+                       id = "empno",/* @readonly = true,*/
+                       @Placeholder = "Empno",
+                       @type="number",
+                       @maxlength = 4,
+                       @class= "empno form-control"
+
+                   })
+                        @*<input type="number" name="EMPNO" id="empno" class="empno form-control" Placeholder = "Empno" maxlength = 4 />*@
+                        <span class="error">*Empno required</span>
+                    </td>
+
+                    <td class="col-md-2">
+
+                        @Html.TextBoxFor(m => m.ENAME, new { id = "ename", @class = "ename form-control", @Placeholder = "Ename", @maxlength = 100 })
+                        @*<input type="text" id="ename" class="ename form-control" />*@
+                        <span class="error">*Ename required</span>
+
+                    </td>
+                    <td class="col-md-2">
+
+                        @Html.TextBoxFor(m => m.JOB, new { id = "job", @class = "job form-control", @Placeholder = "Job" ,@maxlength = 9 })
+                        <span class="error">*Job required</span>
+
+                    </td>
+
+                    <td class="col-md-1">
+                        @Html.TextBoxFor(m => m.MGR, new { id = "mgr", @class = "mgr form-control", @Placeholder = "MGR" , type="number", @maxlength = 4 })
+                        <span class="error">*MGR required</span>
+                    </td>
+
+                    <td class="col-md-2">
+                        @*<input type="text" name="HIREDATE" id="hiredate" class="hiredate form-control" placeholder="Hiredate" autocomplete="off" />*@
+                        @Html.TextBoxFor(m => m.HIREDATE, new { id = "hiredate", @class = "hiredate form-control", @Placeholder = "Hiredate", autocomplete = "off", type="date" })
+                        <span class="error">*Hiredate required</span>
+                    </td>
+
+                    <td class="col-md-2">
+                        @*<input type="number" name="SAL" id="sal" class="sal form-control" placeholder="Sal"/>*@
+                        @Html.TextBoxFor(m => m.SAL, new { id = "sal", @class = "sal form-control", @Placeholder = "Sal" , type="number", @maxlength = 7 })
+                        <span class="error">*Sal required</span>
+                    </td>
+
+                    <td class="col-md-1">
+                        
+                        @Html.TextBoxFor(m => m.COMM, new { id = "comm", @class = "comm form-control", @Placeholder = "Comm" , type="number", @maxlength = 7 })
+                        <span class="error">*Comm required</span>
+                    </td>
+
+                    <td class="col-md-1">
+                        @*@Html.DropDownListFor(m => m.DEPTNO, (IEnumerable<SelectListItem>)ViewBag.drop, "---Select---", new { @class = "form-control ", id = "normalDropDown" })*@
+                        @*<input type="number" name="DEPTNO" id="deptno" class="deptno form-control" placeholder="Deptno" />*@
+                        @Html.TextBoxFor(m => m.DEPTNO, new { id = "deptno", @class = "deptno form-control", @Placeholder = "Deptno",type="number", @maxlength = 2 })
+                        <span class="error">*Deptno required</span>
+                    </td>
+                    <td>
+                        <input type="button" id="add" value="add" style="width:80px" class="btn btn-success" />
+                    </td>
+                </tr>
+            </table>
+            <div id="orderItems">
+                <table class="table table-responsive" id="orderdetailsItems"></table>
+                <span id="orderItemError" style="color:red"></span>
+            </div>
+            <div style="padding:10px 0; text-align:right">
+                <input id="submit" type="button" value="Save Order" class="btn btn-warning" style="padding:10px 20px" />
+            </div>
+            @*<input type="submit" value="Save" class="btn btn-success" />*@
+        </div>
+    </div>
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+@*<script src="~/Scripts/myScripts.js"></script>*@
+<script type="text/javascript">
+ 
+
+
+
+
+    $(document).ready(function () {
+        //Add button click event
+        $('#add').click(function () {
+            //validation and add order items
+            var isAllValid = true;
+
+            if (!($('#empno').val().trim() != '' && !isNaN($('#empno').val().trim()))) {
+                isAllValid = false;
+                $('#empno').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#empno').siblings('span.error').css('visibility', 'hidden');
+            }
+
+
+
+            if (!($('#ename').val().trim() != '')) {
+                isAllValid = false;
+                $('#ename').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#ename').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if (!($('#job').val().trim() != '')) {
+                isAllValid = false;
+                $('#job').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#job').siblings('span.error').css('visibility', 'hidden');
+            }
+
+
+            if (!($('#hiredate').val().trim() != '')) {
+                isAllValid = false;
+                $('#hiredate').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#hiredate').siblings('span.error').css('visibility', 'hidden');
+            }
+
+
+            if (!($('#sal').val().trim() != '' && !isNaN($('#sal').val().trim()))) {
+                isAllValid = false;
+                $('#sal').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#sal').siblings('span.error').css('visibility', 'hidden');
+            }
+
+
+            if (!($('#deptno').val().trim() != '' && !isNaN($('#deptno').val().trim()))) {
+                isAllValid = false;
+                $('#deptno').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#deptno').siblings('span.error').css('visibility', 'hidden');
+            }
+
+
+            if (isAllValid) {
+                var $newRow = $('#mainrow').clone().removeAttr('id');
+                //$('.pc', $newRow).val($('#productCategory').val());
+                //$('.product', $newRow).val($('#product').val());
+
+                //Replace add button with remove button
+                $('#add', $newRow).addClass('remove').val('Remove').removeClass('btn-success').addClass('btn-danger');
+
+                //remove id attribute from new clone row
+                $('#empno,#ename,#job,#mgr,#hiredate,#sal,#comm,#deptno,#add', $newRow).removeAttr('id');
+                $('span.error', $newRow).remove();
+                //append clone row
+                $('#orderdetailsItems').append($newRow);
+
+                //clear select data
+                //$('#productCategory,#product').val('0');
+                //$('#quantity,#rate').val('');
+                $('#empno,#ename,#job,#mgr,#hiredate,#sal,#comm,#deptno').val('');
+                $('#orderItemError').empty();
+            }
+
+        })
+
+        //remove button click event
+        $('#orderdetailsItems').on('click', '.remove', function () {
+            $(this).parents('tr').remove();
+        });
+
+        $('#submit').click(function () {
+            var isAllValid = true;
+
+            //validate order items
+            $('#orderItemError').text('');
+            var list = [];
+            var errorItemCount = 0;
+            $('#orderdetailsItems tbody tr').each(function (index, ele) {
+                if (
+                    //$('select.product', this).val() == "0" ||
+                    $('.empno', this).val() == "" ||
+                    isNaN($('.empno', this).val()) ||
+                    $('.ename', this).val() == "" ||
+                    $('.job', this).val() == "" ||
+                    $('.hiredate', this).val() == "" ||
+                    $('.sal', this).val() == "" ||
+                    isNaN($('.sal', this).val()) ||
+                    $('.deptno', this).val() == "" ||
+                    isNaN($('.deptno', this).val())
+
+                    //$('.rate', this).val() == "" ||
+                    //isNaN($('.rate', this).val())
+                    ) {
+                    errorItemCount++;
+                    $(this).addClass('error');
+                } else {
+                    var orderItem = {
+                        //ProductID: $('select.product', this).val(),
+                        //Quantity: parseInt($('.quantity', this).val()),
+                        //Rate: parseFloat($('.rate', this).val())
+                        EMPNO: $('.empno', this).val(),
+                        ENAME: $('.ename', this).val(),
+                        JOB: $('.job', this).val(),
+                        MGR: $('.mgr', this).val(),
+                        HIREDATE: $('.hiredate', this).val(),
+                        SAL: $('.sal', this).val(),
+                        COMM: $('.comm', this).val(),
+                        DEPTNO: $('.deptno', this).val(),
+                    }
+                    JSON.stringify(orderItem)
+                    list.push(orderItem);
+                }
+            })
+            if (errorItemCount > 0) {
+                $('#orderItemError').text(errorItemCount + " invalid entry in record.");
+                isAllValid = false;
+            }
+
+            if (list.length == 0) {
+                $('#orderItemError').text('At least 1 record required.');
+                isAllValid = false;
+            }
+
+            if ($('#dept').val().trim() == '') {
+                $('#dept').siblings('span.error').css('visibility', 'visible');
+                isAllValid = false;
+            }
+            else {
+                $('#dept').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if ($('#dname').val().trim() == '') {
+                $('#dname').siblings('span.error').css('visibility', 'visible');
+                isAllValid = false;
+            }
+            else {
+                $('#dname').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if ($('#loc').val().trim() == '') {
+                $('#loc').siblings('span.error').css('visibility', 'visible');
+                isAllValid = false;
+            }
+            else {
+                $('#loc').siblings('span.error').css('visibility', 'hidden');
+            }
+            if (isAllValid) {
+                
+                var datas = {
+                    Deptid: $('#dept').val().trim(),
+                    Dname: $('#dname').val().trim(),
+                    Location: $('#loc').val().trim(),
+                    //OrderDetails: list
+                    EMP: list
+                }
+              
+                //$(this).val('Please wait...');
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '/Home/Save',
+                    //data: datas,
+                    //contentType: 'application/json',
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify({ Deptid: datas.Deptid, Dname: datas.Dname, EMP : datas.EMP, Location: datas.Location }),
+                   success: function (data) {
+                        if (data.status) {
+                         alert('Successfully saved');
+                  //  here we will clear the form/
+                         list = [];
+                       $('#dept,#dname,#loc').val('');
+                           $('#orderdetailsItems').empty();
+                       }
+                        else {
+                            alert('Error');
+                        }
+
+                        $('#submit').text('Save');
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $('#submit').text('Save');
+                   }
+                });
+            }
+       })
+    })
+</script>
+<style>
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>
